@@ -22,6 +22,7 @@
     ]
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.49.0",
     "date-fns": "^4.1.0",
     "html2canvas": "^1.4.1",
     "iron-session": "^8.0.4",
