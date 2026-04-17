@@ -37,10 +37,7 @@ export default function SplitsTable({ splits, theme: t }: Props) {
       </thead>
       <tbody>
         {splits.map((s, i) => (
-          <tr
-            key={s.km}
-            style={{ borderTop: `1px solid ${t.text}10` }}
-          >
+          <tr key={s.km} style={{ borderTop: `1px solid ${t.text}10` }}>
             <td style={{ padding: "2.5px 0", opacity: 0.5 }}>{s.km}</td>
             <td
               style={{
@@ -50,13 +47,9 @@ export default function SplitsTable({ splits, theme: t }: Props) {
               }}
             >
               {s.pace.replace(" /km", "")}
-              {i === fastestIdx && (
-                <span style={{ marginLeft: "3px", fontSize: "8px" }}>⚡</span>
-              )}
+              {i === fastestIdx && <span style={{ marginLeft: "3px", fontSize: "8px" }}>⚡</span>}
             </td>
-            <td style={{ padding: "2.5px 0", opacity: 0.6 }}>
-              {s.hr ? `${s.hr}` : "—"}
-            </td>
+            <td style={{ padding: "2.5px 0", opacity: 0.6 }}>{s.hr ? `${s.hr}` : "—"}</td>
             <td style={{ padding: "2.5px 0", opacity: 0.5 }}>
               {s.elevationDiff != null
                 ? `${s.elevationDiff > 0 ? "+" : ""}${s.elevationDiff}m`

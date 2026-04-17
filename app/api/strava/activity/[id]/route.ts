@@ -2,10 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSession } from "@/lib/auth";
 import { fetchActivity, processActivity } from "@/lib/strava";
 
-export async function GET(
-  _request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await requireSession();
 
   if (!session?.accessToken) {

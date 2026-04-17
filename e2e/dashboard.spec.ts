@@ -4,21 +4,35 @@ const mockMe = { accessToken: "tok_123", name: "Test Runner", image: "" };
 
 const mockActivities = [
   {
-    id: 1, name: "Morning Run", date: "Mon, Jan 15",
-    distance: "10.00 km", duration: "50:00", avgPace: "5:00 /km",
-    elevation: "+150m", isPR: false, summaryPolyline: "", calories: 500, cadence: 170,
+    id: 1,
+    name: "Morning Run",
+    date: "Mon, Jan 15",
+    distance: "10.00 km",
+    duration: "50:00",
+    avgPace: "5:00 /km",
+    elevation: "+150m",
+    isPR: false,
+    summaryPolyline: "",
+    calories: 500,
+    cadence: 170,
   },
   {
-    id: 2, name: "PR Run", date: "Tue, Jan 16",
-    distance: "5.00 km", duration: "22:00", avgPace: "4:24 /km",
-    elevation: "+50m", isPR: true, summaryPolyline: "", calories: 300, cadence: 180,
+    id: 2,
+    name: "PR Run",
+    date: "Tue, Jan 16",
+    distance: "5.00 km",
+    duration: "22:00",
+    avgPace: "4:24 /km",
+    elevation: "+50m",
+    isPR: true,
+    summaryPolyline: "",
+    calories: 300,
+    cadence: 180,
   },
 ];
 
 async function setupDashboard(page: Page, activities = mockActivities) {
-  await page.route("**/api/auth/me", (route) =>
-    route.fulfill({ json: mockMe })
-  );
+  await page.route("**/api/auth/me", (route) => route.fulfill({ json: mockMe }));
   await page.route("**/api/strava/activities*", (route) =>
     route.fulfill({ json: { activities, page: 1, perPage: 20 } })
   );

@@ -3,17 +3,17 @@
 export interface StravaSummaryActivity {
   id: number;
   name: string;
-  distance: number;           // meters
-  moving_time: number;        // seconds
-  elapsed_time: number;       // seconds
+  distance: number; // meters
+  moving_time: number; // seconds
+  elapsed_time: number; // seconds
   total_elevation_gain: number; // meters
-  type: string;               // "Run", "Ride", etc.
+  type: string; // "Run", "Ride", etc.
   sport_type: string;
-  start_date: string;         // ISO 8601
+  start_date: string; // ISO 8601
   start_date_local: string;
   timezone: string;
-  average_speed: number;      // m/s
-  max_speed: number;          // m/s
+  average_speed: number; // m/s
+  max_speed: number; // m/s
   average_heartrate?: number;
   max_heartrate?: number;
   average_cadence?: number;
@@ -121,11 +121,11 @@ export interface ProcessedRun {
   id: number;
   name: string;
   date: string;
-  distance: string;       // formatted, e.g. "12.4 km"
-  duration: string;       // formatted, e.g. "1:02:34"
-  avgPace: string;        // formatted, e.g. "5:03 /km"
+  distance: string; // formatted, e.g. "12.4 km"
+  duration: string; // formatted, e.g. "1:02:34"
+  avgPace: string; // formatted, e.g. "5:03 /km"
   calories?: number;
-  elevation: string;      // formatted, e.g. "+284m"
+  elevation: string; // formatted, e.g. "+284m"
   avgHR?: number;
   maxHR?: number;
   cadence?: number;
@@ -138,7 +138,7 @@ export interface ProcessedRun {
 
 export interface ProcessedSplit {
   km: number;
-  pace: string;           // formatted mm:ss
+  pace: string; // formatted mm:ss
   hr?: number;
   elevationDiff?: number;
 }

@@ -9,7 +9,5 @@ export async function GET() {
     scope: "read,activity:read_all",
   });
 
-  return NextResponse.redirect(
-    `https://www.strava.com/oauth/authorize?${params}`
-  );
+  return NextResponse.redirect(`https://www.strava.com/oauth/authorize?${params}`);
 }

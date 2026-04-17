@@ -30,9 +30,7 @@ export async function fetchActivities(
 
   const activities: StravaSummaryActivity[] = await res.json();
   // Filter runs only (Strava type filter above may include virtual runs etc.)
-  return activities.filter((a) =>
-    ["Run", "TrailRun", "VirtualRun"].includes(a.sport_type)
-  );
+  return activities.filter((a) => ["Run", "TrailRun", "VirtualRun"].includes(a.sport_type));
 }
 
 export async function fetchActivity(
@@ -96,9 +94,7 @@ export function computeHRZones(splits: ProcessedSplit[], maxHR = 190): HRZone[] 
   ];
 
   return zones.map((z) => {
-    const inZone = hrs.filter(
-      (hr) => hr / maxHR >= z.min && hr / maxHR < z.max
-    ).length;
+    const inZone = hrs.filter((hr) => hr / maxHR >= z.min && hr / maxHR < z.max).length;
     return {
       zone: z.zone,
       pct: Math.round((inZone / hrs.length) * 100),
@@ -137,9 +133,7 @@ export function processActivity(a: StravaDetailedActivity): ProcessedRun {
     summaryPolyline: a.map?.summary_polyline ?? "",
     splits,
     hrZones: computeHRZones(splits, a.max_heartrate ?? 190),
-    elevationProfile: (a.splits_metric ?? []).map((s) =>
-      Math.round(s.elevation_difference)
-    ),
+    elevationProfile: (a.splits_metric ?? []).map((s) => Math.round(s.elevation_difference)),
   };
 }
 

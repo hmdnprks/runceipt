@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:e2e": "playwright test",
@@ -16,6 +18,9 @@
     "prepare": "husky"
   },
   "lint-staged": {
+    "*.{ts,tsx,js,mjs,json,css,md}": [
+      "prettier --write"
+    ],
     "*.{ts,tsx}": [
       "eslint --fix",
       "jest --findRelatedTests --passWithNoTests"
@@ -43,10 +48,13 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "husky": "^9.1.7",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
     "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
     "tailwindcss": "^4",
     "ts-jest": "^29.4.9",
     "typescript": "^5"

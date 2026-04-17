@@ -32,10 +32,29 @@ export default function Receipt({ run, enabled, theme: t, quote }: Props) {
     >
       {/* ── Header ─────────────────────────────────────────── */}
       <div style={{ textAlign: "center", marginBottom: "16px" }}>
-        <div style={{ fontSize: "8px", letterSpacing: "0.22em", opacity: 0.4, marginBottom: "4px", textTransform: "uppercase" }}>
+        <div
+          style={{
+            fontSize: "8px",
+            letterSpacing: "0.22em",
+            opacity: 0.4,
+            marginBottom: "4px",
+            textTransform: "uppercase",
+          }}
+        >
           Runceipt · via Strava
         </div>
-        <div style={{ fontSize: "17px", fontWeight: "bold", letterSpacing: "0.03em", marginBottom: "4px", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+        <div
+          style={{
+            fontSize: "17px",
+            fontWeight: "bold",
+            letterSpacing: "0.03em",
+            marginBottom: "4px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "6px",
+          }}
+        >
           {run.name}
           {enabled.pr_badge && run.isPR && <span style={{ fontSize: "14px" }}>🏅</span>}
         </div>
@@ -56,7 +75,14 @@ export default function Receipt({ run, enabled, theme: t, quote }: Props) {
       {/* ── Key Stats ──────────────────────────────────────── */}
       {enabled.stats && (
         <>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "4px" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "12px",
+              marginBottom: "4px",
+            }}
+          >
             {[
               ["Distance", run.distance],
               ["Duration", run.duration],
@@ -66,8 +92,26 @@ export default function Receipt({ run, enabled, theme: t, quote }: Props) {
               ["Cadence", run.cadence ? `${run.cadence} spm` : "—"],
             ].map(([label, value]) => (
               <div key={label}>
-                <div style={{ fontSize: "8px", opacity: 0.4, textTransform: "uppercase", letterSpacing: "0.12em" }}>{label}</div>
-                <div style={{ fontSize: "15px", fontWeight: "700", color: t.accent, letterSpacing: "0.02em" }}>{value}</div>
+                <div
+                  style={{
+                    fontSize: "8px",
+                    opacity: 0.4,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.12em",
+                  }}
+                >
+                  {label}
+                </div>
+                <div
+                  style={{
+                    fontSize: "15px",
+                    fontWeight: "700",
+                    color: t.accent,
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  {value}
+                </div>
               </div>
             ))}
           </div>
@@ -113,10 +157,21 @@ export default function Receipt({ run, enabled, theme: t, quote }: Props) {
 
       {/* ── Weather + HR summary ───────────────────────────── */}
       {(enabled.weather || enabled.stats) && (run.avgHR || run.maxHR) && (
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", opacity: 0.6, marginBottom: "8px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            fontSize: "10px",
+            opacity: 0.6,
+            marginBottom: "8px",
+          }}
+        >
           {enabled.weather && <span>📍 Run recorded</span>}
           {run.avgHR && (
-            <span>❤️ avg {run.avgHR}{run.maxHR ? ` / max ${run.maxHR}` : ""} bpm</span>
+            <span>
+              ❤️ avg {run.avgHR}
+              {run.maxHR ? ` / max ${run.maxHR}` : ""} bpm
+            </span>
           )}
         </div>
       )}
@@ -125,7 +180,15 @@ export default function Receipt({ run, enabled, theme: t, quote }: Props) {
       {enabled.quote && (
         <>
           <Divider color={t.text} />
-          <div style={{ textAlign: "center", fontStyle: "italic", fontSize: "9px", opacity: 0.45, padding: "4px 8px" }}>
+          <div
+            style={{
+              textAlign: "center",
+              fontStyle: "italic",
+              fontSize: "9px",
+              opacity: 0.45,
+              padding: "4px 8px",
+            }}
+          >
             &ldquo;{quote}&rdquo;
           </div>
         </>
@@ -133,7 +196,16 @@ export default function Receipt({ run, enabled, theme: t, quote }: Props) {
 
       {/* ── Footer ─────────────────────────────────────────── */}
       <Divider color={t.text} />
-      <div style={{ textAlign: "center", fontSize: "8px", opacity: 0.25, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "6px" }}>
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "8px",
+          opacity: 0.25,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          marginBottom: "6px",
+        }}
+      >
         runceipt.app
       </div>
       <div style={{ textAlign: "center", fontSize: "10px", opacity: 0.1, letterSpacing: "0.08em" }}>
@@ -149,7 +221,16 @@ function Divider({ color }: { color: string }) {
 
 function SectionLabel({ color, children }: { color: string; children: React.ReactNode }) {
   return (
-    <div style={{ fontSize: "8px", opacity: 0.4, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: "5px", color }}>
+    <div
+      style={{
+        fontSize: "8px",
+        opacity: 0.4,
+        letterSpacing: "0.18em",
+        textTransform: "uppercase",
+        marginBottom: "5px",
+        color,
+      }}
+    >
       {children}
     </div>
   );

@@ -75,11 +75,11 @@ describe("computeHRZones", () => {
     const maxHR = 200;
     // Z1: <120, Z2: 120-140, Z3: 140-160, Z4: 160-180, Z5: 180-200
     const splits: ProcessedSplit[] = [
-      { km: 1, pace: "5:00", hr: 100 },  // Z1
-      { km: 2, pace: "5:00", hr: 130 },  // Z2
-      { km: 3, pace: "5:00", hr: 150 },  // Z3
-      { km: 4, pace: "5:00", hr: 170 },  // Z4
-      { km: 5, pace: "5:00", hr: 190 },  // Z5
+      { km: 1, pace: "5:00", hr: 100 }, // Z1
+      { km: 2, pace: "5:00", hr: 130 }, // Z2
+      { km: 3, pace: "5:00", hr: 150 }, // Z3
+      { km: 4, pace: "5:00", hr: 170 }, // Z4
+      { km: 5, pace: "5:00", hr: 190 }, // Z5
     ];
     const zones = computeHRZones(splits, maxHR);
     expect(zones).toHaveLength(5);
@@ -112,8 +112,26 @@ describe("processActivity", () => {
     achievement_count: 1,
     pr_count: 1,
     splits_metric: [
-      { distance: 1000, elapsed_time: 300, elevation_difference: 5, moving_time: 295, split: 1, average_speed: 3.33, average_heartrate: 150, pace_zone: 3 },
-      { distance: 1000, elapsed_time: 310, elevation_difference: -2, moving_time: 305, split: 2, average_speed: 3.2, average_heartrate: 160, pace_zone: 3 },
+      {
+        distance: 1000,
+        elapsed_time: 300,
+        elevation_difference: 5,
+        moving_time: 295,
+        split: 1,
+        average_speed: 3.33,
+        average_heartrate: 150,
+        pace_zone: 3,
+      },
+      {
+        distance: 1000,
+        elapsed_time: 310,
+        elevation_difference: -2,
+        moving_time: 305,
+        split: 2,
+        average_speed: 3.2,
+        average_heartrate: 160,
+        pace_zone: 3,
+      },
     ],
     splits_standard: [],
     laps: [],

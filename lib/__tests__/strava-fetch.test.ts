@@ -68,9 +68,7 @@ describe("fetchActivities", () => {
       json: () => Promise.reject(new Error("parse error")),
     });
 
-    await expect(fetchActivities("token")).rejects.toThrow(
-      "Failed to fetch Strava activities"
-    );
+    await expect(fetchActivities("token")).rejects.toThrow("Failed to fetch Strava activities");
   });
 });
 
@@ -114,8 +112,6 @@ describe("fetchActivity", () => {
       json: () => Promise.reject(new Error("parse error")),
     });
 
-    await expect(fetchActivity("token", 1)).rejects.toThrow(
-      "Failed to fetch activity"
-    );
+    await expect(fetchActivity("token", 1)).rejects.toThrow("Failed to fetch activity");
   });
 });

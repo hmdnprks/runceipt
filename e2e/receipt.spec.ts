@@ -3,10 +3,19 @@ import { test, expect, Page } from "@playwright/test";
 const mockMe = { accessToken: "tok_123", name: "Test Runner", image: "" };
 
 const mockActivity = {
-  id: 42, name: "Evening Run", date: "Monday, Jan 15, 2024",
-  distance: "10.00 km", duration: "50:00", avgPace: "5:00 /km",
-  calories: 600, elevation: "+150m", avgHR: 155, maxHR: 180, cadence: 170,
-  isPR: true, summaryPolyline: "",
+  id: 42,
+  name: "Evening Run",
+  date: "Monday, Jan 15, 2024",
+  distance: "10.00 km",
+  duration: "50:00",
+  avgPace: "5:00 /km",
+  calories: 600,
+  elevation: "+150m",
+  avgHR: 155,
+  maxHR: 180,
+  cadence: 170,
+  isPR: true,
+  summaryPolyline: "",
   splits: [
     { km: 1, pace: "5:00 /km", hr: 150, elevationDiff: 5 },
     { km: 2, pace: "4:50 /km", hr: 160, elevationDiff: -2 },
@@ -19,9 +28,7 @@ const mockActivity = {
 };
 
 async function setupReceipt(page: Page) {
-  await page.route("**/api/auth/me", (route) =>
-    route.fulfill({ json: mockMe })
-  );
+  await page.route("**/api/auth/me", (route) => route.fulfill({ json: mockMe }));
   await page.route("**/api/strava/activity/*", (route) =>
     route.fulfill({ json: { activity: mockActivity } })
   );
@@ -132,9 +139,7 @@ test.describe("Receipt page", () => {
   });
 
   test("shows error screen for failed activity fetch", async ({ page }) => {
-    await page.route("**/api/auth/me", (route) =>
-      route.fulfill({ json: mockMe })
-    );
+    await page.route("**/api/auth/me", (route) => route.fulfill({ json: mockMe }));
     await page.route("**/api/strava/activity/*", (route) =>
       route.fulfill({ json: { error: "Activity not found" } })
     );

@@ -36,21 +36,22 @@ export const THEMES: ReceiptTheme[] = [
 ];
 
 export const MODULES: ReceiptModule[] = [
-  { id: "route",      label: "Route Map",           icon: "🗺️",  defaultEnabled: true  },
-  { id: "stats",      label: "Key Stats",           icon: "📊",  defaultEnabled: true  },
-  { id: "pace_chart", label: "Pace Chart",          icon: "📈",  defaultEnabled: true  },
-  { id: "elevation",  label: "Elevation Profile",   icon: "⛰️",  defaultEnabled: false },
-  { id: "hr_zones",   label: "Heart Rate Zones",    icon: "❤️",  defaultEnabled: true  },
-  { id: "splits",     label: "Split Table",         icon: "⏱️",  defaultEnabled: false },
-  { id: "weather",    label: "Weather Stamp",       icon: "🌤️",  defaultEnabled: true  },
-  { id: "pr_badge",   label: "PR Badge",            icon: "🏅",  defaultEnabled: true  },
-  { id: "quote",      label: "Motivational Quote",  icon: "✨",  defaultEnabled: false },
+  { id: "route", label: "Route Map", icon: "🗺️", defaultEnabled: true },
+  { id: "stats", label: "Key Stats", icon: "📊", defaultEnabled: true },
+  { id: "pace_chart", label: "Pace Chart", icon: "📈", defaultEnabled: true },
+  { id: "elevation", label: "Elevation Profile", icon: "⛰️", defaultEnabled: false },
+  { id: "hr_zones", label: "Heart Rate Zones", icon: "❤️", defaultEnabled: true },
+  { id: "splits", label: "Split Table", icon: "⏱️", defaultEnabled: false },
+  { id: "weather", label: "Weather Stamp", icon: "🌤️", defaultEnabled: true },
+  { id: "pr_badge", label: "PR Badge", icon: "🏅", defaultEnabled: true },
+  { id: "quote", label: "Motivational Quote", icon: "✨", defaultEnabled: false },
 ];
 
 export const DEFAULT_CONFIG = {
-  enabledModules: Object.fromEntries(
-    MODULES.map((m) => [m.id, m.defaultEnabled])
-  ) as Record<ModuleId, boolean>,
+  enabledModules: Object.fromEntries(MODULES.map((m) => [m.id, m.defaultEnabled])) as Record<
+    ModuleId,
+    boolean
+  >,
   themeId: "thermal" as ThemeId,
 };
 

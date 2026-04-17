@@ -75,17 +75,17 @@ Baseline screenshots are stored in `e2e/visual.spec.ts-snapshots/` — commit th
 
 ### All Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start dev server |
-| `npm run build` | Production build |
-| `npm run lint` | Run ESLint |
-| `npm test` | Unit tests (Jest) |
-| `npm run test:coverage` | Unit tests with coverage |
-| `npm run test:e2e` | E2E tests (Playwright) |
-| `npm run test:e2e:ui` | E2E tests with UI |
-| `npm run test:visual` | Visual regression tests |
-| `npm run test:visual:update` | Update visual baselines |
+| Script                       | Description              |
+| ---------------------------- | ------------------------ |
+| `npm run dev`                | Start dev server         |
+| `npm run build`              | Production build         |
+| `npm run lint`               | Run ESLint               |
+| `npm test`                   | Unit tests (Jest)        |
+| `npm run test:coverage`      | Unit tests with coverage |
+| `npm run test:e2e`           | E2E tests (Playwright)   |
+| `npm run test:e2e:ui`        | E2E tests with UI        |
+| `npm run test:visual`        | Visual regression tests  |
+| `npm run test:visual:update` | Update visual baselines  |
 
 ## Commit Conventions
 
