@@ -15,6 +15,12 @@
     "test:visual:update": "playwright test e2e/visual.spec.ts --update-snapshots",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "jest --findRelatedTests --passWithNoTests"
+    ]
+  },
   "dependencies": {
     "date-fns": "^4.1.0",
     "html2canvas": "^1.4.1",
@@ -39,6 +45,7 @@
     "husky": "^9.1.7",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
+    "lint-staged": "^16.4.0",
     "tailwindcss": "^4",
     "ts-jest": "^29.4.9",
     "typescript": "^5"
