@@ -105,7 +105,7 @@ export interface ReceiptTheme {
 export interface ReceiptModule {
   id: ModuleId;
   label: string;
-  icon: string;
+  icon: React.FC<{ size?: number; color?: string; strokeWidth?: number }>;
   defaultEnabled: boolean;
 }
 

@@ -59,7 +59,7 @@ export default function Home() {
         <p style={{ color: "#888", fontSize: "14px", lineHeight: "1.6", marginBottom: "32px" }}>
           Turn your Strava runs into
           <br />
-          beautiful shareable receipts 🧾
+          beautiful shareable receipts
         </p>
         <div
           style={{ display: "flex", gap: "12px", justifyContent: "center", marginBottom: "36px" }}

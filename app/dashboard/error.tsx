@@ -1,5 +1,7 @@
 "use client";
 
+import { AlertTriangle, ArrowLeft } from "lucide-react";
+
 export default function DashboardError({
   error,
   reset,
@@ -9,7 +11,7 @@ export default function DashboardError({
 }) {
   return (
     <div style={s.root}>
-      <div style={s.icon}>⚠️</div>
+      <AlertTriangle size={40} color="#ff6b6b" strokeWidth={1.5} />
       <h2 style={s.title}>Failed to load your runs</h2>
       <p style={s.message}>{error.message || "Something went wrong loading the dashboard"}</p>
       <div style={s.actions}>
@@ -17,7 +19,8 @@ export default function DashboardError({
           Try again
         </button>
         <button onClick={() => (window.location.href = "/")} style={s.btnSecondary}>
-          ← Back to home
+          <ArrowLeft size={11} strokeWidth={1.5} />
+          Back to home
         </button>
       </div>
     </div>
@@ -35,7 +38,6 @@ const s: Record<string, React.CSSProperties> = {
     fontFamily: "'Courier New', monospace",
     gap: "12px",
   },
-  icon: { fontSize: "40px" },
   title: { color: "#fff", fontSize: "18px", fontWeight: "700" },
   message: { color: "#888", fontSize: "12px", maxWidth: "400px", textAlign: "center" },
   actions: { display: "flex", gap: "12px", marginTop: "8px" },
@@ -51,6 +53,9 @@ const s: Record<string, React.CSSProperties> = {
     fontWeight: "700",
   },
   btnSecondary: {
+    display: "flex",
+    alignItems: "center",
+    gap: "4px",
     background: "none",
     border: "1px solid #333",
     color: "#888",

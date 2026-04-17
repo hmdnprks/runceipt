@@ -1,5 +1,7 @@
 "use client";
 
+import { FileText, ArrowLeft } from "lucide-react";
+
 export default function ReceiptError({
   error,
   reset,
@@ -9,7 +11,7 @@ export default function ReceiptError({
 }) {
   return (
     <div style={s.root}>
-      <div style={s.icon}>🧾</div>
+      <FileText size={40} color="#6ee7b7" strokeWidth={1.5} />
       <h2 style={s.title}>Failed to load receipt</h2>
       <p style={s.message}>{error.message || "Something went wrong generating this receipt"}</p>
       <div style={s.actions}>
@@ -17,7 +19,8 @@ export default function ReceiptError({
           Try again
         </button>
         <button onClick={() => (window.location.href = "/dashboard")} style={s.btnSecondary}>
-          ← Back to dashboard
+          <ArrowLeft size={11} strokeWidth={1.5} />
+          Back to dashboard
         </button>
       </div>
     </div>
@@ -35,7 +38,6 @@ const s: Record<string, React.CSSProperties> = {
     fontFamily: "'Courier New', monospace",
     gap: "12px",
   },
-  icon: { fontSize: "40px" },
   title: { color: "#fff", fontSize: "18px", fontWeight: "700" },
   message: { color: "#888", fontSize: "12px", maxWidth: "400px", textAlign: "center" },
   actions: { display: "flex", gap: "12px", marginTop: "8px" },
@@ -51,6 +53,9 @@ const s: Record<string, React.CSSProperties> = {
     fontWeight: "700",
   },
   btnSecondary: {
+    display: "flex",
+    alignItems: "center",
+    gap: "4px",
     background: "none",
     border: "1px solid #333",
     color: "#888",

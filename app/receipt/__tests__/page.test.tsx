@@ -76,7 +76,7 @@ describe("Receipt page", () => {
     render(<ReceiptPage />);
     await waitFor(() => {
       expect(screen.getByText(/Not Found/)).toBeInTheDocument();
-      expect(screen.getByText("← Back to dashboard")).toBeInTheDocument();
+      expect(screen.getByText("Back to dashboard")).toBeInTheDocument();
     });
   });
 
@@ -137,17 +137,17 @@ describe("Receipt page", () => {
     setupFetch(meResponse, mockActivity);
     render(<ReceiptPage />);
     await waitFor(() => {
-      expect(screen.getByText("🖨️ Animate Print")).toBeInTheDocument();
-      expect(screen.getByText("⬇️ Export PNG")).toBeInTheDocument();
-      expect(screen.getByText("📤 Share")).toBeInTheDocument();
+      expect(screen.getByText("Animate Print")).toBeInTheDocument();
+      expect(screen.getByText("Export PNG")).toBeInTheDocument();
+      expect(screen.getByText("Share")).toBeInTheDocument();
     });
   });
 
   it("navigates back to dashboard via back button", async () => {
     setupFetch(meResponse, mockActivity);
     render(<ReceiptPage />);
-    await waitFor(() => screen.getByText("← All runs"));
-    fireEvent.click(screen.getByText("← All runs"));
+    await waitFor(() => screen.getByText("All runs"));
+    fireEvent.click(screen.getByText("All runs"));
     expect(mockPush).toHaveBeenCalledWith("/dashboard");
   });
 

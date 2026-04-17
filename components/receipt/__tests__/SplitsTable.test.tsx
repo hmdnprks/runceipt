@@ -20,13 +20,11 @@ describe("SplitsTable", () => {
     expect(screen.getByText("3")).toBeInTheDocument();
   });
 
-  it("highlights fastest split with ⚡", () => {
+  it("highlights fastest split with a bolt icon", () => {
     render(<SplitsTable splits={splits} theme={theme} />);
-    // km 2 is fastest (4:50)
-    expect(screen.getByText("⚡")).toBeInTheDocument();
-    // The ⚡ should be next to the 4:50 pace
-    const bolt = screen.getByText("⚡");
-    expect(bolt.parentElement?.textContent).toContain("4:50");
+    // km 2 is fastest (4:50) — Zap SVG icon rendered as aria-hidden
+    const fastCell = screen.getByText("4:50").closest("td");
+    expect(fastCell?.querySelector("svg")).toBeInTheDocument();
   });
 
   it("renders HR values", () => {

@@ -58,12 +58,14 @@ describe("Receipt", () => {
     const { rerender } = render(
       <Receipt run={{ ...baseRun, isPR: true }} enabled={allEnabled} theme={theme} quote="" />
     );
-    expect(screen.getByText("🏅")).toBeInTheDocument();
+    // Award icon rendered as SVG when isPR
+    const header = screen.getByText("Morning Run").closest("div");
+    expect(header?.querySelector("svg")).toBeInTheDocument();
 
     rerender(
       <Receipt run={{ ...baseRun, isPR: false }} enabled={allEnabled} theme={theme} quote="" />
     );
-    expect(screen.queryByText("🏅")).not.toBeInTheDocument();
+    expect(header?.querySelector("svg")).not.toBeInTheDocument();
   });
 
   it("hides stats section when disabled", () => {

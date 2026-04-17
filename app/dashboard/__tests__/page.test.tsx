@@ -94,7 +94,7 @@ describe("Dashboard page", () => {
     setupFetch(meResponse, mockActivities);
     render(<Dashboard />);
     await waitFor(() => {
-      expect(screen.getByText("🏅 PR")).toBeInTheDocument();
+      expect(screen.getByText("PR")).toBeInTheDocument();
     });
   });
 
@@ -131,8 +131,7 @@ describe("Dashboard page", () => {
     setupFetch(meResponse, mockActivities);
     render(<Dashboard />);
     await waitFor(() => screen.getByText("Morning Run"));
-    // Each card has "Generate receipt →"
-    const ctaButtons = screen.getAllByText("Generate receipt →");
+    const ctaButtons = screen.getAllByText("Generate receipt");
     ctaButtons[0].closest("button")?.click();
     expect(mockPush).toHaveBeenCalledWith("/receipt/1");
   });

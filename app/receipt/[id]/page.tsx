@@ -2,6 +2,7 @@
 
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
+import { ArrowLeft, Check, Download, Printer, Share2, AlertTriangle } from "lucide-react";
 import type { ProcessedRun, ModuleId, ThemeId } from "@/types/strava";
 import {
   THEMES,
@@ -146,8 +147,12 @@ export default function ReceiptPage() {
       {/* ── Sidebar ─────────────────────────────────────────── */}
       <aside style={s.sidebar}>
         {/* Back */}
-        <button onClick={() => router.push("/dashboard")} style={s.backBtn}>
-          ← All runs
+        <button
+          onClick={() => router.push("/dashboard")}
+          style={{ ...s.backBtn, display: "flex", alignItems: "center", gap: "4px" }}
+        >
+          <ArrowLeft size={11} strokeWidth={1.5} />
+          All runs
         </button>
 
         <div style={s.sidebarTitle}>Customize</div>
@@ -168,7 +173,7 @@ export default function ReceiptPage() {
               }}
             >
               {t.label}
-              {themeId === t.id && <span style={{ color: t.accent }}>✓</span>}
+              {themeId === t.id && <Check size={10} strokeWidth={2.5} color={t.accent} />}
             </button>
           ))}
         </section>
@@ -200,7 +205,7 @@ export default function ReceiptPage() {
                 borderLeft: enabled[m.id] ? "3px solid #6ee7b7" : "3px solid #222",
               }}
             >
-              <span>{m.icon}</span>
+              <m.icon size={12} strokeWidth={1.5} />
               <span style={{ flex: 1 }}>{m.label}</span>
               <span
                 style={{
@@ -215,7 +220,7 @@ export default function ReceiptPage() {
                   color: "#111",
                 }}
               >
-                {enabled[m.id] ? "✓" : ""}
+                {enabled[m.id] ? <Check size={8} strokeWidth={2.5} color="#111" /> : null}
               </span>
             </button>
           ))}
@@ -223,14 +228,53 @@ export default function ReceiptPage() {
 
         {/* Actions */}
         <div style={s.actions}>
-          <button onClick={handlePrint} style={s.printBtn}>
-            🖨️ Animate Print
+          <button
+            onClick={handlePrint}
+            style={{
+              ...s.printBtn,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "6px",
+            }}
+          >
+            <Printer size={11} strokeWidth={1.5} />
+            Animate Print
           </button>
-          <button onClick={handleExport} style={s.exportBtn}>
-            {exported ? "✓ Saved!" : "⬇️ Export PNG"}
+          <button
+            onClick={handleExport}
+            style={{
+              ...s.exportBtn,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "6px",
+            }}
+          >
+            {exported ? (
+              <>
+                <Check size={11} strokeWidth={2} />
+                Saved!
+              </>
+            ) : (
+              <>
+                <Download size={11} strokeWidth={1.5} />
+                Export PNG
+              </>
+            )}
           </button>
-          <button onClick={handleShare} style={s.exportBtn}>
-            📤 Share
+          <button
+            onClick={handleShare}
+            style={{
+              ...s.exportBtn,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "6px",
+            }}
+          >
+            <Share2 size={11} strokeWidth={1.5} />
+            Share
           </button>
         </div>
       </aside>
@@ -265,7 +309,7 @@ export default function ReceiptPage() {
           <div style={{ ...s.tornEdge, background: theme.bg }} />
         </div>
 
-        <p style={s.hint}>Customize → Animate → Export → Share ⚡</p>
+        <p style={s.hint}>Customize · Animate · Export · Share</p>
       </main>
 
       <style>{`
@@ -314,10 +358,24 @@ function ErrorScreen({ error, onBack }: { error: string | null; onBack: () => vo
         fontFamily: "monospace",
       }}
     >
-      <p style={{ color: "#ff6b6b", marginBottom: "16px" }}>⚠️ {error ?? "Activity not found"}</p>
+      <p
+        style={{
+          color: "#ff6b6b",
+          marginBottom: "16px",
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
+        }}
+      >
+        <AlertTriangle size={14} strokeWidth={1.5} />
+        {error ?? "Activity not found"}
+      </p>
       <button
         onClick={onBack}
         style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "4px",
           background: "none",
           border: "1px solid #333",
           color: "#888",
@@ -327,7 +385,8 @@ function ErrorScreen({ error, onBack }: { error: string | null; onBack: () => vo
           fontFamily: "monospace",
         }}
       >
-        ← Back to dashboard
+        <ArrowLeft size={11} strokeWidth={1.5} />
+        Back to dashboard
       </button>
     </div>
   );

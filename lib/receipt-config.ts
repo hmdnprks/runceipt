@@ -1,3 +1,14 @@
+import {
+  Map,
+  BarChart2,
+  TrendingUp,
+  Mountain,
+  Heart,
+  Timer,
+  CloudSun,
+  Award,
+  Sparkles,
+} from "lucide-react";
 import type { ReceiptTheme, ReceiptModule, ModuleId, ThemeId } from "@/types/strava";
 
 export const THEMES: ReceiptTheme[] = [
@@ -17,14 +28,7 @@ export const THEMES: ReceiptTheme[] = [
     accent: "#7c6fff",
     font: "mono",
   },
-  {
-    id: "neon",
-    label: "Neon",
-    bg: "#0a0a0a",
-    text: "#39ff14",
-    accent: "#39ff14",
-    font: "mono",
-  },
+  { id: "neon", label: "Neon", bg: "#0a0a0a", text: "#39ff14", accent: "#39ff14", font: "mono" },
   {
     id: "minimal",
     label: "Minimal",
@@ -36,15 +40,15 @@ export const THEMES: ReceiptTheme[] = [
 ];
 
 export const MODULES: ReceiptModule[] = [
-  { id: "route", label: "Route Map", icon: "🗺️", defaultEnabled: true },
-  { id: "stats", label: "Key Stats", icon: "📊", defaultEnabled: true },
-  { id: "pace_chart", label: "Pace Chart", icon: "📈", defaultEnabled: true },
-  { id: "elevation", label: "Elevation Profile", icon: "⛰️", defaultEnabled: false },
-  { id: "hr_zones", label: "Heart Rate Zones", icon: "❤️", defaultEnabled: true },
-  { id: "splits", label: "Split Table", icon: "⏱️", defaultEnabled: false },
-  { id: "weather", label: "Weather Stamp", icon: "🌤️", defaultEnabled: true },
-  { id: "pr_badge", label: "PR Badge", icon: "🏅", defaultEnabled: true },
-  { id: "quote", label: "Motivational Quote", icon: "✨", defaultEnabled: false },
+  { id: "route", label: "Route Map", icon: Map, defaultEnabled: true },
+  { id: "stats", label: "Key Stats", icon: BarChart2, defaultEnabled: true },
+  { id: "pace_chart", label: "Pace Chart", icon: TrendingUp, defaultEnabled: true },
+  { id: "elevation", label: "Elevation Profile", icon: Mountain, defaultEnabled: false },
+  { id: "hr_zones", label: "Heart Rate Zones", icon: Heart, defaultEnabled: true },
+  { id: "splits", label: "Split Table", icon: Timer, defaultEnabled: false },
+  { id: "weather", label: "Weather Stamp", icon: CloudSun, defaultEnabled: true },
+  { id: "pr_badge", label: "PR Badge", icon: Award, defaultEnabled: true },
+  { id: "quote", label: "Motivational Quote", icon: Sparkles, defaultEnabled: false },
 ];
 
 export const DEFAULT_CONFIG = {
