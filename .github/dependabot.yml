@@ -1,0 +1,54 @@
+version: 2
+
+updates:
+  # npm dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Jakarta"
+    open-pull-requests-limit: 10
+    groups:
+      # Batch all non-major Sentry updates together
+      sentry:
+        patterns:
+          - "@sentry/*"
+      # Batch all testing tools together
+      testing:
+        patterns:
+          - "@playwright/*"
+          - "@testing-library/*"
+          - "jest*"
+          - "ts-jest"
+          - "@types/jest"
+      # Batch minor/patch Next.js ecosystem updates
+      nextjs-ecosystem:
+        patterns:
+          - "next"
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      # Let major Next.js/React upgrades be deliberate
+      - dependency-name: "next"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Jakarta"
+    open-pull-requests-limit: 5
