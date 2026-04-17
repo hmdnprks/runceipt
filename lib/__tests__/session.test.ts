@@ -6,8 +6,6 @@ describe("sessionOptions", () => {
   });
 
   it("sets secure cookies based on NODE_ENV", () => {
-    expect(sessionOptions.cookieOptions?.secure).toBe(
-      process.env.NODE_ENV === "production"
-    );
+    expect(sessionOptions.cookieOptions?.secure).toBe(process.env.NODE_ENV === "production");
   });
 });

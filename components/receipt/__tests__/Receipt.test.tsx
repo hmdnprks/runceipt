@@ -73,7 +73,9 @@ describe("Receipt", () => {
   });
 
   it("shows stats section when enabled", () => {
-    render(<Receipt run={baseRun} enabled={{ ...allDisabled, stats: true }} theme={theme} quote="" />);
+    render(
+      <Receipt run={baseRun} enabled={{ ...allDisabled, stats: true }} theme={theme} quote="" />
+    );
     expect(screen.getByText("10.00 km")).toBeInTheDocument();
     expect(screen.getByText("50:00")).toBeInTheDocument();
     expect(screen.getByText("600 kcal")).toBeInTheDocument();
@@ -83,18 +85,23 @@ describe("Receipt", () => {
   it("shows quote only when enabled", () => {
     const quote = "Pain is temporary.";
     const { rerender } = render(
-      <Receipt run={baseRun} enabled={{ ...allDisabled, quote: true }} theme={theme} quote={quote} />
+      <Receipt
+        run={baseRun}
+        enabled={{ ...allDisabled, quote: true }}
+        theme={theme}
+        quote={quote}
+      />
     );
     expect(screen.getByText(`\u201c${quote}\u201d`)).toBeInTheDocument();
 
-    rerender(
-      <Receipt run={baseRun} enabled={allDisabled} theme={theme} quote={quote} />
-    );
+    rerender(<Receipt run={baseRun} enabled={allDisabled} theme={theme} quote={quote} />);
     expect(screen.queryByText(`\u201c${quote}\u201d`)).not.toBeInTheDocument();
   });
 
   it("shows HR summary when stats enabled and HR data exists", () => {
-    render(<Receipt run={baseRun} enabled={{ ...allDisabled, stats: true }} theme={theme} quote="" />);
+    render(
+      <Receipt run={baseRun} enabled={{ ...allDisabled, stats: true }} theme={theme} quote="" />
+    );
     expect(screen.getByText(/avg 155/)).toBeInTheDocument();
     expect(screen.getByText(/max 180/)).toBeInTheDocument();
   });

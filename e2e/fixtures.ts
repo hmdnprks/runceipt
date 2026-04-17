@@ -3,10 +3,19 @@ import { Page } from "@playwright/test";
 export const mockMe = { accessToken: "tok_123", name: "Test Runner", image: "" };
 
 export const mockActivity = {
-  id: 42, name: "Evening Run", date: "Monday, Jan 15, 2024",
-  distance: "10.00 km", duration: "50:00", avgPace: "5:00 /km",
-  calories: 600, elevation: "+150m", avgHR: 155, maxHR: 180, cadence: 170,
-  isPR: true, summaryPolyline: "",
+  id: 42,
+  name: "Evening Run",
+  date: "Monday, Jan 15, 2024",
+  distance: "10.00 km",
+  duration: "50:00",
+  avgPace: "5:00 /km",
+  calories: 600,
+  elevation: "+150m",
+  avgHR: 155,
+  maxHR: 180,
+  cadence: 170,
+  isPR: true,
+  summaryPolyline: "",
   splits: [
     { km: 1, pace: "5:00 /km", hr: 150, elevationDiff: 5 },
     { km: 2, pace: "4:50 /km", hr: 160, elevationDiff: -2 },
@@ -27,10 +36,6 @@ export const mockActivity = {
 export const mockActivityNoPR = { ...mockActivity, isPR: false, name: "Easy Jog" };
 
 export async function setupReceiptPage(page: Page, activity = mockActivity) {
-  await page.route("**/api/auth/me", (route) =>
-    route.fulfill({ json: mockMe })
-  );
-  await page.route("**/api/strava/activity/*", (route) =>
-    route.fulfill({ json: { activity } })
-  );
+  await page.route("**/api/auth/me", (route) => route.fulfill({ json: mockMe }));
+  await page.route("**/api/strava/activity/*", (route) => route.fulfill({ json: { activity } }));
 }

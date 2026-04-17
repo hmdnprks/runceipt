@@ -70,21 +70,27 @@ function normalizeCoords(
   ]);
 }
 
-const FALLBACK_PATH = "M 20 80 C 35 65, 55 55, 75 45 S 110 30, 130 28 S 160 35, 175 55 S 168 78, 150 85 S 110 92, 85 88 S 45 80, 20 80";
+const FALLBACK_PATH =
+  "M 20 80 C 35 65, 55 55, 75 45 S 110 30, 130 28 S 160 35, 175 55 S 168 78, 150 85 S 110 92, 85 88 S 45 80, 20 80";
 
 export default function RouteSVG({ polyline, theme: t }: Props) {
   const W = 272;
   const H = 110;
 
   let pathD = "";
-  let startX = 20, startY = 80, endX = 175, endY = 55;
+  let startX = 20,
+    startY = 80,
+    endX = 175,
+    endY = 55;
 
   if (polyline) {
     try {
       const raw = decodePolyline(polyline);
       if (raw.length >= 2) {
         const pts = normalizeCoords(raw, W, H, 12);
-        pathD = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`).join(" ");
+        pathD = pts
+          .map(([x, y], i) => `${i === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`)
+          .join(" ");
         startX = pts[0][0];
         startY = pts[0][1];
         endX = pts[pts.length - 1][0];
@@ -103,14 +109,40 @@ export default function RouteSVG({ polyline, theme: t }: Props) {
     <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "100px" }}>
       {/* Grid */}
       {[H * 0.3, H * 0.6, H * 0.9].map((y) => (
-        <line key={y} x1="0" y1={y} x2={W} y2={y} stroke={t.text} strokeOpacity="0.06" strokeWidth="0.5" />
+        <line
+          key={y}
+          x1="0"
+          y1={y}
+          x2={W}
+          y2={y}
+          stroke={t.text}
+          strokeOpacity="0.06"
+          strokeWidth="0.5"
+        />
       ))}
       {[W * 0.25, W * 0.5, W * 0.75].map((x) => (
-        <line key={x} x1={x} y1="0" x2={x} y2={H} stroke={t.text} strokeOpacity="0.06" strokeWidth="0.5" />
+        <line
+          key={x}
+          x1={x}
+          y1="0"
+          x2={x}
+          y2={H}
+          stroke={t.text}
+          strokeOpacity="0.06"
+          strokeWidth="0.5"
+        />
       ))}
 
       {/* Glow shadow */}
-      <path d={pathD} fill="none" stroke={t.accent} strokeOpacity="0.12" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d={pathD}
+        fill="none"
+        stroke={t.accent}
+        strokeOpacity="0.12"
+        strokeWidth="7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
 
       {/* Route line */}
       <path
@@ -124,7 +156,15 @@ export default function RouteSVG({ polyline, theme: t }: Props) {
 
       {/* Start circle */}
       <circle cx={startX} cy={startY} r="4" fill={t.accent} />
-      <circle cx={startX} cy={startY} r="7" fill="none" stroke={t.accent} strokeWidth="1" strokeOpacity="0.3" />
+      <circle
+        cx={startX}
+        cy={startY}
+        r="7"
+        fill="none"
+        stroke={t.accent}
+        strokeWidth="1"
+        strokeOpacity="0.3"
+      />
 
       {/* End flag */}
       <circle cx={endX} cy={endY} r="4" fill={t.accent} />

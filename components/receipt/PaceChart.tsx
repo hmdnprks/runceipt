@@ -30,22 +30,11 @@ export default function PaceChart({ splits, theme: t }: Props) {
         const barH = ((p - min) / range) * (H - 14) + 8;
         const isBest = p === min;
         const isWorst = p === max;
-        const fill = isBest
-          ? t.accent
-          : isWorst
-          ? `${t.text}55`
-          : `${t.text}30`;
+        const fill = isBest ? t.accent : isWorst ? `${t.text}55` : `${t.text}30`;
 
         return (
           <g key={i}>
-            <rect
-              x={i * (barW + 3)}
-              y={H - barH}
-              width={barW}
-              height={barH}
-              fill={fill}
-              rx={2}
-            />
+            <rect x={i * (barW + 3)} y={H - barH} width={barW} height={barH} fill={fill} rx={2} />
             {/* km label */}
             {paces.length <= 15 && (
               <text

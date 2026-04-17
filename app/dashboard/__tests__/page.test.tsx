@@ -10,20 +10,38 @@ jest.mock("next/navigation", () => ({
 const mockFetch = jest.fn();
 global.fetch = mockFetch;
 
-const meResponse = { name: "Test Runner", image: "https://example.com/avatar.jpg", accessToken: "tok" };
+const meResponse = {
+  name: "Test Runner",
+  image: "https://example.com/avatar.jpg",
+  accessToken: "tok",
+};
 
 const mockActivities = [
   {
-    id: 1, name: "Morning Run", date: "Mon, Jan 15",
-    distance: "10.00 km", duration: "50:00", avgPace: "5:00 /km",
-    elevation: "+150m", isPR: false, summaryPolyline: "",
-    calories: 500, cadence: 170,
+    id: 1,
+    name: "Morning Run",
+    date: "Mon, Jan 15",
+    distance: "10.00 km",
+    duration: "50:00",
+    avgPace: "5:00 /km",
+    elevation: "+150m",
+    isPR: false,
+    summaryPolyline: "",
+    calories: 500,
+    cadence: 170,
   },
   {
-    id: 2, name: "PR Run", date: "Tue, Jan 16",
-    distance: "5.00 km", duration: "22:00", avgPace: "4:24 /km",
-    elevation: "+50m", isPR: true, summaryPolyline: "",
-    calories: 300, cadence: 180,
+    id: 2,
+    name: "PR Run",
+    date: "Tue, Jan 16",
+    distance: "5.00 km",
+    duration: "22:00",
+    avgPace: "4:24 /km",
+    elevation: "+50m",
+    isPR: true,
+    summaryPolyline: "",
+    calories: 300,
+    cadence: 180,
   },
 ];
 

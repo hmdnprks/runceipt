@@ -25,11 +25,39 @@ export default function ReceiptError({
 }
 
 const s: Record<string, React.CSSProperties> = {
-  root: { minHeight: "100vh", background: "#111", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "'Courier New', monospace", gap: "12px" },
+  root: {
+    minHeight: "100vh",
+    background: "#111",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    fontFamily: "'Courier New', monospace",
+    gap: "12px",
+  },
   icon: { fontSize: "40px" },
   title: { color: "#fff", fontSize: "18px", fontWeight: "700" },
   message: { color: "#888", fontSize: "12px", maxWidth: "400px", textAlign: "center" },
   actions: { display: "flex", gap: "12px", marginTop: "8px" },
-  btn: { background: "#6ee7b7", color: "#111", border: "none", padding: "10px 20px", borderRadius: "4px", cursor: "pointer", fontFamily: "'Courier New', monospace", fontSize: "12px", fontWeight: "700" },
-  btnSecondary: { background: "none", border: "1px solid #333", color: "#888", padding: "10px 20px", borderRadius: "4px", cursor: "pointer", fontFamily: "'Courier New', monospace", fontSize: "12px" },
+  btn: {
+    background: "#6ee7b7",
+    color: "#111",
+    border: "none",
+    padding: "10px 20px",
+    borderRadius: "4px",
+    cursor: "pointer",
+    fontFamily: "'Courier New', monospace",
+    fontSize: "12px",
+    fontWeight: "700",
+  },
+  btnSecondary: {
+    background: "none",
+    border: "1px solid #333",
+    color: "#888",
+    padding: "10px 20px",
+    borderRadius: "4px",
+    cursor: "pointer",
+    fontFamily: "'Courier New', monospace",
+    fontSize: "12px",
+  },
 };

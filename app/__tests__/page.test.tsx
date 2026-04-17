@@ -35,23 +35,17 @@ describe("Home page", () => {
       Promise.resolve({ json: () => Promise.resolve({ error: "Unauthorized" }) })
     );
     render(<Home />);
-    await waitFor(() =>
-      expect(screen.getByText("Connect with Strava")).toBeInTheDocument()
-    );
+    await waitFor(() => expect(screen.getByText("Connect with Strava")).toBeInTheDocument());
   });
 
   it("renders login button when fetch fails", async () => {
     mockFetch.mockImplementation(() => Promise.reject(new Error("network error")));
     render(<Home />);
-    await waitFor(() =>
-      expect(screen.getByText("Connect with Strava")).toBeInTheDocument()
-    );
+    await waitFor(() => expect(screen.getByText("Connect with Strava")).toBeInTheDocument());
   });
 
   it("shows sample distances on landing", async () => {
-    mockFetch.mockImplementation(() =>
-      Promise.resolve({ json: () => Promise.resolve({}) })
-    );
+    mockFetch.mockImplementation(() => Promise.resolve({ json: () => Promise.resolve({}) }));
     render(<Home />);
     await waitFor(() => {
       expect(screen.getByText("5.2 km")).toBeInTheDocument();

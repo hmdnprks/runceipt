@@ -1,4 +1,10 @@
-import { THEMES, MODULES, DEFAULT_CONFIG, getTheme, MOTIVATIONAL_QUOTES } from "@/lib/receipt-config";
+import {
+  THEMES,
+  MODULES,
+  DEFAULT_CONFIG,
+  getTheme,
+  MOTIVATIONAL_QUOTES,
+} from "@/lib/receipt-config";
 
 describe("THEMES", () => {
   it("has 4 themes", () => {
