@@ -62,7 +62,7 @@ test.describe("Dashboard", () => {
     await setupDashboard(page);
     await page.goto("/dashboard");
 
-    await expect(page.getByText("🏅 PR")).toBeVisible();
+    await expect(page.locator("span").filter({ hasText: /^PR$/ })).toBeVisible();
   });
 
   test("displays activity stats on cards", async ({ page }) => {
