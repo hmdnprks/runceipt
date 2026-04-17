@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Runceipt 🧾
+
+Turn your Strava runs into beautiful, shareable receipts.
+
+Built with [Next.js](https://nextjs.org), React 19, and the Strava API.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file:
 
-## Learn More
+```env
+STRAVA_CLIENT_ID=<your_client_id>
+STRAVA_CLIENT_SECRET=<your_client_secret>
+AUTH_SECRET=<random_32_char_secret>
+NEXTAUTH_URL=http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/
+  page.tsx                  # Landing page
+  dashboard/page.tsx        # Activity list
+  receipt/[id]/page.tsx     # Receipt customizer
+  api/
+    auth/                   # Login, callback, logout, session
+    strava/                 # Activities & activity detail proxy
+components/
+  receipt/                  # Receipt, SplitsTable, HRZones, PaceChart, etc.
+lib/
+  auth.ts                   # Session helpers
+  strava.ts                 # Strava API calls & data transformers
+  receipt-config.ts         # Themes, modules, defaults
+  session.ts                # Iron-session config
+types/
+  strava.ts                 # TypeScript types
+e2e/                        # Playwright E2E & visual regression tests
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Testing
+
+### Unit Tests (Jest)
+
+```bash
+npm test                    # Run all unit tests
+npm run test:coverage       # Run with HTML coverage report
+```
+
+Coverage report is generated at `coverage/lcov-report/index.html`.
+
+### E2E Tests (Playwright)
+
+```bash
+npm run test:e2e            # Run E2E tests headless
+npm run test:e2e:ui         # Run with interactive UI
+```
+
+### Visual Regression Tests
+
+```bash
+npm run test:visual:update  # Generate/update baseline screenshots
+npm run test:visual         # Compare against baselines
+```
+
+Baseline screenshots are stored in `e2e/visual.spec.ts-snapshots/` — commit these to git.
+
+### All Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build |
+| `npm run lint` | Run ESLint |
+| `npm test` | Unit tests (Jest) |
+| `npm run test:coverage` | Unit tests with coverage |
+| `npm run test:e2e` | E2E tests (Playwright) |
+| `npm run test:e2e:ui` | E2E tests with UI |
+| `npm run test:visual` | Visual regression tests |
+| `npm run test:visual:update` | Update visual baselines |
+
+## Commit Conventions
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org/) enforced by [husky](https://typicode.github.io/husky/) + [commitlint](https://commitlint.js.org/).
+
+```
+type(scope): description
+
+# Examples
+feat: add PDF export
+fix(receipt): correct pace calculation
+test: add visual regression for neon theme
+refactor(dashboard): extract activity card
+docs: update README
+chore: update dependencies
+```
+
+Pre-commit hooks run `lint` and `test` automatically.
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Or deploy directly via the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme). See the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for details.
