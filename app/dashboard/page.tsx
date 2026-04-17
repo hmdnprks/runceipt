@@ -27,16 +27,23 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!me) return;
-    setLoading(true);
-    fetch(`/api/strava/activities?page=${page}&per_page=20`)
-      .then(r => r.json())
-      .then(data => {
+    let cancelled = false;
+    const fetchActivities = async () => {
+      try {
+        const r = await fetch(`/api/strava/activities?page=${page}&per_page=20`);
+        const data = await r.json();
+        if (cancelled) return;
         if (data.error) throw new Error(data.error);
         setActivities(prev => page === 1 ? data.activities : [...prev, ...data.activities]);
         setHasMore(data.activities.length === 20);
-      })
-      .catch(e => setError(e.message))
-      .finally(() => setLoading(false));
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Unknown error");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    fetchActivities();
+    return () => { cancelled = true; };
   }, [me, page]);
 
   return (
@@ -80,7 +87,7 @@ export default function Dashboard() {
         </div>
 
         {!loading && hasMore && activities.length > 0 && (
-          <button onClick={() => setPage((p) => p + 1)} style={s.loadMoreBtn}>
+          <button onClick={() => { setLoading(true); setPage((p) => p + 1); }} style={s.loadMoreBtn}>
             Load more runs
           </button>
         )}
@@ -140,14 +147,6 @@ function SkeletonCard() {
       {[80, 50, 100].map((w, i) => (
         <div key={i} style={{ height: "10px", background: "#222", borderRadius: "2px", marginBottom: "10px", width: `${w}%`, animation: "pulse 1.5s ease-in-out infinite" }} />
       ))}
-    </div>
-  );
-}
-
-function LoadingScreen() {
-  return (
-    <div style={{ minHeight: "100vh", background: "#111", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <p style={{ color: "#888", fontFamily: "monospace" }}>Loading your runs...</p>
     </div>
   );
 }

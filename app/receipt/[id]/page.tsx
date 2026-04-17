@@ -35,16 +35,23 @@ export default function ReceiptPage() {
 
   useEffect(() => {
     if (!me || !id) return;
-    setLoading(true);
-    fetch(`/api/strava/activity/${id}`)
-      .then((r) => r.json())
-      .then((data) => {
+    let cancelled = false;
+    const fetchActivity = async () => {
+      try {
+        const r = await fetch(`/api/strava/activity/${id}`);
+        const data = await r.json();
+        if (cancelled) return;
         if (data.error) throw new Error(data.error);
         setRun(data.activity);
         setCustomTitle(data.activity.name);
-      })
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
+      } catch (e) {
+        if (!cancelled) setError(e instanceof Error ? e.message : "Unknown error");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    fetchActivity();
+    return () => { cancelled = true; };
   }, [me, id]);
 
   const toggleModule = (moduleId: ModuleId) =>
