@@ -70,7 +70,7 @@ test.describe("Receipt page", () => {
     await page.getByText("Night Run").click();
     // The active theme should show a checkmark
     const nightBtn = page.getByText("Night Run").locator("..");
-    await expect(nightBtn).toContainText("✓");
+    await expect(nightBtn.locator("svg")).toBeVisible();
   });
 
   test("shows module toggles", async ({ page }) => {
@@ -120,9 +120,9 @@ test.describe("Receipt page", () => {
     await setupReceipt(page);
     await page.goto("/receipt/42");
 
-    await expect(page.getByText("🖨️ Animate Print")).toBeVisible();
-    await expect(page.getByText("⬇️ Export PNG")).toBeVisible();
-    await expect(page.getByText("📤 Share")).toBeVisible();
+    await expect(page.getByText("Animate Print")).toBeVisible();
+    await expect(page.getByText("Export PNG")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Share" })).toBeVisible();
   });
 
   test("back button navigates to dashboard", async ({ page }) => {
@@ -133,7 +133,7 @@ test.describe("Receipt page", () => {
     );
 
     await page.goto("/receipt/42");
-    await page.getByText("← All runs").click();
+    await page.getByText("All runs").click();
     await page.waitForURL("**/dashboard");
     expect(page.url()).toContain("/dashboard");
   });
@@ -146,6 +146,6 @@ test.describe("Receipt page", () => {
 
     await page.goto("/receipt/42");
     await expect(page.getByText("Activity not found")).toBeVisible();
-    await expect(page.getByText("← Back to dashboard")).toBeVisible();
+    await expect(page.getByText("Back to dashboard")).toBeVisible();
   });
 });

@@ -1,6 +1,7 @@
 "use client";
 
 import * as Sentry from "@sentry/nextjs";
+import { AlertCircle } from "lucide-react";
 import { useEffect } from "react";
 
 export default function GlobalError({
@@ -18,7 +19,7 @@ export default function GlobalError({
     <html>
       <body>
         <div style={s.root}>
-          <div style={s.icon}>💥</div>
+          <AlertCircle size={40} color="#ff6b6b" strokeWidth={1.5} />
           <h2 style={s.title}>Something went wrong</h2>
           <p style={s.message}>{error.message || "An unexpected error occurred"}</p>
           <button onClick={reset} style={s.btn}>
@@ -41,7 +42,6 @@ const s: Record<string, React.CSSProperties> = {
     fontFamily: "'Courier New', monospace",
     gap: "12px",
   },
-  icon: { fontSize: "40px" },
   title: { color: "#fff", fontSize: "18px", fontWeight: "700" },
   message: { color: "#888", fontSize: "12px", maxWidth: "400px", textAlign: "center" },
   btn: {

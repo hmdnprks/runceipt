@@ -1,3 +1,4 @@
+import { Award, Heart, MapPin } from "lucide-react";
 import type { ProcessedRun, ModuleId, ReceiptTheme } from "@/types/strava";
 import RouteSVG from "./RouteSVG";
 import PaceChart from "./PaceChart";
@@ -56,7 +57,7 @@ export default function Receipt({ run, enabled, theme: t, quote }: Props) {
           }}
         >
           {run.name}
-          {enabled.pr_badge && run.isPR && <span style={{ fontSize: "14px" }}>🏅</span>}
+          {enabled.pr_badge && run.isPR && <Award size={14} strokeWidth={1.5} />}
         </div>
         <div style={{ fontSize: "9px", opacity: 0.4, letterSpacing: "0.12em" }}>{run.date}</div>
       </div>
@@ -166,10 +167,16 @@ export default function Receipt({ run, enabled, theme: t, quote }: Props) {
             marginBottom: "8px",
           }}
         >
-          {enabled.weather && <span>📍 Run recorded</span>}
+          {enabled.weather && (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "3px" }}>
+              <MapPin size={10} strokeWidth={1.5} />
+              Run recorded
+            </span>
+          )}
           {run.avgHR && (
-            <span>
-              ❤️ avg {run.avgHR}
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "3px" }}>
+              <Heart size={10} strokeWidth={1.5} />
+              avg {run.avgHR}
               {run.maxHR ? ` / max ${run.maxHR}` : ""} bpm
             </span>
           )}

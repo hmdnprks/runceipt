@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PersonStanding, Award, ArrowRight, AlertTriangle } from "lucide-react";
 import type { ProcessedRun } from "@/types/strava";
 import MiniRoute from "@/components/receipt/MiniRoute";
 
@@ -75,7 +76,12 @@ export default function Dashboard() {
         <h1 style={s.h1}>Your Runs</h1>
         <p style={s.subtitle}>Select a run to generate its receipt</p>
 
-        {error && <div style={s.errorBox}>⚠️ {error}</div>}
+        {error && (
+          <div style={s.errorBox}>
+            <AlertTriangle size={12} strokeWidth={1.5} />
+            {error}
+          </div>
+        )}
 
         <div style={s.grid}>
           {activities.map((a) => (
@@ -98,7 +104,7 @@ export default function Dashboard() {
 
         {!loading && activities.length === 0 && !error && (
           <div style={s.emptyState}>
-            <div style={{ fontSize: "40px", marginBottom: "12px" }}>🏃</div>
+            <PersonStanding size={40} color="#6ee7b7" strokeWidth={1.5} />
             <p style={{ color: "#888", fontSize: "13px" }}>No runs found. Go run something!</p>
           </div>
         )}
@@ -125,7 +131,12 @@ function ActivityCard({
         }}
       >
         <div style={s.cardTitle}>{a.name}</div>
-        {a.isPR && <span style={s.prBadge}>🏅 PR</span>}
+        {a.isPR && (
+          <span style={{ ...s.prBadge, display: "flex", alignItems: "center", gap: "3px" }}>
+            <Award size={11} strokeWidth={1.5} />
+            PR
+          </span>
+        )}
       </div>
       <div style={s.cardDate}>{a.date}</div>
 
@@ -137,7 +148,10 @@ function ActivityCard({
         <Stat label="Pace" value={a.avgPace.replace(" /km", "")} />
       </div>
       <div style={s.cardFooter}>
-        <span style={s.cardCta}>Generate receipt →</span>
+        <span style={{ ...s.cardCta, display: "flex", alignItems: "center", gap: "4px" }}>
+          Generate receipt
+          <ArrowRight size={10} strokeWidth={1.5} />
+        </span>
       </div>
     </button>
   );
@@ -208,6 +222,9 @@ const s: Record<string, React.CSSProperties> = {
   h1: { color: "#fff", fontSize: "22px", fontWeight: "700", marginBottom: "6px" },
   subtitle: { color: "#555", fontSize: "11px", letterSpacing: "0.1em", marginBottom: "32px" },
   errorBox: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
     background: "#1a0a0a",
     border: "1px solid #3a1a1a",
     color: "#ff6b6b",
@@ -249,7 +266,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   cardCta: { color: "#555", fontSize: "9px", letterSpacing: "0.12em" },
   statsRow: { display: "flex", gap: "20px", marginBottom: "14px" },
-  prBadge: { fontSize: "11px", flexShrink: 0 },
+  prBadge: { fontSize: "11px", flexShrink: 0, color: "#6ee7b7" },
   cardFooter: { borderTop: "1px solid #1e1e1e", paddingTop: "10px" },
   loadMoreBtn: {
     display: "block",
@@ -263,5 +280,12 @@ const s: Record<string, React.CSSProperties> = {
     cursor: "pointer",
     fontFamily: "'Courier New', monospace",
   },
-  emptyState: { textAlign: "center", padding: "80px 20px" },
+  emptyState: {
+    textAlign: "center",
+    padding: "80px 20px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "12px",
+  },
 };

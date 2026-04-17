@@ -1,3 +1,4 @@
+import { Zap } from "lucide-react";
 import type { ProcessedSplit, ReceiptTheme } from "@/types/strava";
 
 interface Props {
@@ -6,7 +7,6 @@ interface Props {
 }
 
 export default function SplitsTable({ splits, theme: t }: Props) {
-  // Find fastest split for highlighting
   const paces = splits.map((s) => {
     const clean = s.pace.replace(" /km", "").trim();
     const [m, sec] = clean.split(":").map(Number);
@@ -46,8 +46,10 @@ export default function SplitsTable({ splits, theme: t }: Props) {
                 color: i === fastestIdx ? t.accent : t.text,
               }}
             >
-              {s.pace.replace(" /km", "")}
-              {i === fastestIdx && <span style={{ marginLeft: "3px", fontSize: "8px" }}>⚡</span>}
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "2px" }}>
+                {s.pace.replace(" /km", "")}
+                {i === fastestIdx && <Zap size={8} strokeWidth={2} />}
+              </span>
             </td>
             <td style={{ padding: "2.5px 0", opacity: 0.6 }}>{s.hr ? `${s.hr}` : "—"}</td>
             <td style={{ padding: "2.5px 0", opacity: 0.5 }}>

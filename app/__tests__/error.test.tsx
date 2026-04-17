@@ -29,7 +29,7 @@ describe("DashboardError", () => {
     render(<DashboardError error={mockError} reset={mockReset} />);
     expect(screen.getByText("Failed to load your runs")).toBeInTheDocument();
     expect(screen.getByText("Test error message")).toBeInTheDocument();
-    expect(screen.getByText("← Back to home")).toBeInTheDocument();
+    expect(screen.getByText("Back to home")).toBeInTheDocument();
 
     fireEvent.click(screen.getByText("Try again"));
     expect(mockReset).toHaveBeenCalled();
@@ -41,7 +41,7 @@ describe("ReceiptError", () => {
     render(<ReceiptError error={mockError} reset={mockReset} />);
     expect(screen.getByText("Failed to load receipt")).toBeInTheDocument();
     expect(screen.getByText("Test error message")).toBeInTheDocument();
-    expect(screen.getByText("← Back to dashboard")).toBeInTheDocument();
+    expect(screen.getByText("Back to dashboard")).toBeInTheDocument();
 
     fireEvent.click(screen.getByText("Try again"));
     expect(mockReset).toHaveBeenCalled();
