@@ -121,8 +121,8 @@ test.describe("Receipt page", () => {
     await page.goto("/receipt/42");
 
     await expect(page.getByText("Animate Print")).toBeVisible();
-    await expect(page.getByText("Export PNG")).toBeVisible();
-    await expect(page.getByRole("button", { name: "Share" })).toBeVisible();
+    await expect(page.locator(".rp-sidebar-actions").getByText("Export PNG")).toBeVisible();
+    await expect(page.locator(".rp-sidebar-actions").getByText("Share")).toBeVisible();
   });
 
   test("back button navigates to dashboard", async ({ page }) => {
@@ -133,7 +133,7 @@ test.describe("Receipt page", () => {
     );
 
     await page.goto("/receipt/42");
-    await page.getByText("All runs").click();
+    await page.locator(".rp-sidebar-back").click();
     await page.waitForURL("**/dashboard");
     expect(page.url()).toContain("/dashboard");
   });
