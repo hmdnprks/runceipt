@@ -2,7 +2,16 @@
 
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
-import { ArrowLeft, Check, Download, Printer, Share2, AlertTriangle } from "lucide-react";
+import {
+  ArrowLeft,
+  Check,
+  Download,
+  Printer,
+  Share2,
+  AlertTriangle,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
 import type { ProcessedRun, ModuleId, ThemeId } from "@/types/strava";
 import {
   THEMES,
@@ -29,6 +38,7 @@ export default function ReceiptPage() {
   const [printing, setPrinting] = useState(false);
   const [exported, setExported] = useState(false);
   const [customTitle, setCustomTitle] = useState("");
+  const [customizeOpen, setCustomizeOpen] = useState(false);
   const receiptRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -109,7 +119,6 @@ export default function ReceiptPage() {
         if (!blob) return;
         const file = new File([blob], "run-receipt.png", { type: "image/png" });
 
-        // Web Share API — works on mobile (iOS Safari, Android Chrome)
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
             await navigator.share({
@@ -118,11 +127,10 @@ export default function ReceiptPage() {
               text: `${run?.distance} in ${run?.duration} 🏃 via RunReceipt`,
             });
           } catch (e) {
-            if (e instanceof Error && e.name === "AbortError") return; // user cancelled, ignore
+            if (e instanceof Error && e.name === "AbortError") return;
             console.error("Share failed", e);
           }
         } else {
-          // Desktop fallback — just download
           const url = URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
@@ -142,12 +150,112 @@ export default function ReceiptPage() {
   if (!me || loading) return <LoadingScreen />;
   if (error || !run) return <ErrorScreen error={error} onBack={() => router.push("/dashboard")} />;
 
+  const enabledCount = Object.values(enabled).filter(Boolean).length;
+
+  const sidebarContent = (
+    <>
+      <div style={s.sidebarTitle}>Customize</div>
+
+      {/* Theme */}
+      <section style={s.section}>
+        <div style={s.sectionLabel}>Theme</div>
+        {THEMES.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => setThemeId(t.id)}
+            style={{
+              ...s.themeBtn,
+              background: t.bg,
+              color: t.text,
+              border: themeId === t.id ? `2px solid ${t.accent}` : "2px solid transparent",
+              fontFamily: t.font === "serif" ? "Georgia, serif" : "'Courier New', monospace",
+            }}
+          >
+            {t.label}
+            {themeId === t.id && <Check size={10} strokeWidth={2.5} color={t.accent} />}
+          </button>
+        ))}
+      </section>
+
+      {/* Title */}
+      <section style={s.section}>
+        <div style={s.sectionLabel}>Run Title</div>
+        <input
+          value={customTitle}
+          onChange={(e) => setCustomTitle(e.target.value)}
+          maxLength={40}
+          style={s.titleInput}
+          placeholder="Rename your run..."
+        />
+      </section>
+
+      {/* Modules */}
+      <section style={s.section}>
+        <div style={s.sectionLabel}>Metrics</div>
+        {MODULES.map((m) => (
+          <button
+            key={m.id}
+            onClick={() => toggleModule(m.id)}
+            style={{
+              ...s.moduleBtn,
+              background: enabled[m.id] ? "#252525" : "transparent",
+              color: enabled[m.id] ? "#fff" : "#555",
+              border: enabled[m.id] ? "1px solid #3a3a3a" : "1px solid #222",
+              borderLeft: enabled[m.id] ? "3px solid #6ee7b7" : "3px solid #222",
+            }}
+          >
+            <m.icon size={12} strokeWidth={1.5} />
+            <span style={{ flex: 1 }}>{m.label}</span>
+            <span
+              style={{
+                width: 14,
+                height: 14,
+                borderRadius: "50%",
+                background: enabled[m.id] ? "#6ee7b7" : "#2a2a2a",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "8px",
+                color: "#111",
+              }}
+            >
+              {enabled[m.id] ? <Check size={8} strokeWidth={2.5} color="#111" /> : null}
+            </span>
+          </button>
+        ))}
+      </section>
+    </>
+  );
+
   return (
-    <div style={s.root}>
-      {/* ── Sidebar ─────────────────────────────────────────── */}
-      <aside style={s.sidebar}>
-        {/* Back */}
+    <div className="rp-root" style={s.root}>
+      {/* ── Mobile Header ────────────────────────────────────── */}
+      <header className="rp-mobile-header">
         <button
+          onClick={() => router.push("/dashboard")}
+          style={{
+            ...s.backBtn,
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+            marginBottom: 0,
+          }}
+        >
+          <ArrowLeft size={13} strokeWidth={1.5} />
+          All runs
+        </button>
+        <button onClick={() => setCustomizeOpen(true)} className="rp-customize-toggle">
+          <SlidersHorizontal size={14} strokeWidth={1.5} />
+          Customize
+          {enabledCount > 0 && <span className="rp-customize-badge">{enabledCount}</span>}
+        </button>
+      </header>
+
+      {/* ── Sidebar (desktop) / Drawer (mobile) ──────────────── */}
+      <aside className={`rp-sidebar${customizeOpen ? " rp-sidebar--open" : ""}`} style={s.sidebar}>
+        {/* Desktop back button */}
+        <button
+          className="rp-sidebar-back"
           onClick={() => router.push("/dashboard")}
           style={{ ...s.backBtn, display: "flex", alignItems: "center", gap: "4px" }}
         >
@@ -155,79 +263,22 @@ export default function ReceiptPage() {
           All runs
         </button>
 
-        <div style={s.sidebarTitle}>Customize</div>
+        {/* Mobile drawer handle + close */}
+        <div className="rp-drawer-handle-row">
+          <div className="rp-drawer-handle" />
+          <button
+            className="rp-drawer-close"
+            onClick={() => setCustomizeOpen(false)}
+            aria-label="Close customize panel"
+          >
+            <X size={16} strokeWidth={1.5} />
+          </button>
+        </div>
 
-        {/* Theme */}
-        <section style={s.section}>
-          <div style={s.sectionLabel}>Theme</div>
-          {THEMES.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setThemeId(t.id)}
-              style={{
-                ...s.themeBtn,
-                background: t.bg,
-                color: t.text,
-                border: themeId === t.id ? `2px solid ${t.accent}` : "2px solid transparent",
-                fontFamily: t.font === "serif" ? "Georgia, serif" : "'Courier New', monospace",
-              }}
-            >
-              {t.label}
-              {themeId === t.id && <Check size={10} strokeWidth={2.5} color={t.accent} />}
-            </button>
-          ))}
-        </section>
+        {sidebarContent}
 
-        {/* Title */}
-        <section style={s.section}>
-          <div style={s.sectionLabel}>Run Title</div>
-          <input
-            value={customTitle}
-            onChange={(e) => setCustomTitle(e.target.value)}
-            maxLength={40}
-            style={s.titleInput}
-            placeholder="Rename your run..."
-          />
-        </section>
-
-        {/* Modules */}
-        <section style={s.section}>
-          <div style={s.sectionLabel}>Metrics</div>
-          {MODULES.map((m) => (
-            <button
-              key={m.id}
-              onClick={() => toggleModule(m.id)}
-              style={{
-                ...s.moduleBtn,
-                background: enabled[m.id] ? "#252525" : "transparent",
-                color: enabled[m.id] ? "#fff" : "#555",
-                border: enabled[m.id] ? "1px solid #3a3a3a" : "1px solid #222",
-                borderLeft: enabled[m.id] ? "3px solid #6ee7b7" : "3px solid #222",
-              }}
-            >
-              <m.icon size={12} strokeWidth={1.5} />
-              <span style={{ flex: 1 }}>{m.label}</span>
-              <span
-                style={{
-                  width: 14,
-                  height: 14,
-                  borderRadius: "50%",
-                  background: enabled[m.id] ? "#6ee7b7" : "#2a2a2a",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "8px",
-                  color: "#111",
-                }}
-              >
-                {enabled[m.id] ? <Check size={8} strokeWidth={2.5} color="#111" /> : null}
-              </span>
-            </button>
-          ))}
-        </section>
-
-        {/* Actions */}
-        <div style={s.actions}>
+        {/* Desktop-only action buttons */}
+        <div className="rp-sidebar-actions" style={s.actions}>
           <button
             onClick={handlePrint}
             style={{
@@ -279,8 +330,11 @@ export default function ReceiptPage() {
         </div>
       </aside>
 
-      {/* ── Receipt Preview ──────────────────────────────────── */}
-      <main style={s.preview}>
+      {/* ── Drawer overlay ───────────────────────────────────── */}
+      {customizeOpen && <div className="rp-overlay" onClick={() => setCustomizeOpen(false)} />}
+
+      {/* ── Receipt Preview ───────────────────────────────────── */}
+      <main className="rp-preview" style={s.preview}>
         <div style={s.previewLabel}>Live Preview</div>
 
         {/* Printer slot */}
@@ -312,7 +366,225 @@ export default function ReceiptPage() {
         <p style={s.hint}>Customize · Animate · Export · Share</p>
       </main>
 
+      {/* ── Mobile bottom action bar ─────────────────────────── */}
+      <div className="rp-mobile-actions">
+        <button className="rp-action-btn rp-action-btn--secondary" onClick={handlePrint}>
+          <Printer size={14} strokeWidth={1.5} />
+          Animate
+        </button>
+        <button className="rp-action-btn rp-action-btn--primary" onClick={handleExport}>
+          {exported ? (
+            <>
+              <Check size={14} strokeWidth={2} />
+              Saved!
+            </>
+          ) : (
+            <>
+              <Download size={14} strokeWidth={1.5} />
+              Export PNG
+            </>
+          )}
+        </button>
+        <button className="rp-action-btn rp-action-btn--primary" onClick={handleShare}>
+          <Share2 size={14} strokeWidth={1.5} />
+          Share
+        </button>
+      </div>
+
       <style>{`
+        /* ── Responsive layout ────────────────────────────────── */
+        .rp-root {
+          flex-direction: row;
+        }
+        .rp-mobile-header {
+          display: none;
+        }
+        .rp-mobile-actions {
+          display: none;
+        }
+        .rp-overlay {
+          display: none;
+        }
+        .rp-sidebar-back {
+          display: flex !important;
+        }
+        .rp-sidebar-actions {
+          display: flex;
+        }
+        .rp-drawer-handle-row {
+          display: none;
+        }
+
+        @media (max-width: 767px) {
+          .rp-root {
+            flex-direction: column;
+            padding-bottom: 72px;
+          }
+
+          /* Fixed top header */
+          .rp-mobile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: #181818;
+            border-bottom: 1px solid #252525;
+            padding: 12px 16px;
+            height: 52px;
+            box-sizing: border-box;
+          }
+
+          /* Customize toggle button in header */
+          .rp-customize-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #252525;
+            border: 1px solid #333;
+            color: #ccc;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            cursor: pointer;
+            letter-spacing: 0.06em;
+            position: relative;
+          }
+
+          /* Active modules badge on Customize button */
+          .rp-customize-badge {
+            background: #6ee7b7;
+            color: #111;
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 5px;
+            min-width: 16px;
+            text-align: center;
+          }
+
+          /* Preview: scroll area, account for fixed header + bottom bar */
+          .rp-preview {
+            padding-top: 72px !important;
+            padding-bottom: 20px !important;
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+          }
+
+          /* Sidebar becomes bottom drawer */
+          .rp-sidebar {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            min-width: unset !important;
+            max-height: 78vh !important;
+            transform: translateY(100%);
+            transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 90;
+            border-right: none !important;
+            border-top: 1px solid #333 !important;
+            border-radius: 16px 16px 0 0 !important;
+            overflow-y: auto !important;
+            padding: 0 18px 24px !important;
+            box-sizing: border-box;
+          }
+          .rp-sidebar--open {
+            transform: translateY(0) !important;
+          }
+
+          /* Drawer handle bar */
+          .rp-drawer-handle-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 0 8px;
+            position: relative;
+          }
+          .rp-drawer-handle {
+            width: 36px;
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+          }
+          .rp-drawer-close {
+            position: absolute;
+            right: 0;
+            background: none;
+            border: none;
+            color: #555;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+          }
+
+          /* Hide back button inside drawer on mobile */
+          .rp-sidebar-back {
+            display: none !important;
+          }
+
+          /* Hide action buttons inside drawer on mobile */
+          .rp-sidebar-actions {
+            display: none !important;
+          }
+
+          /* Semi-transparent overlay */
+          .rp-overlay {
+            display: block;
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            background: rgba(0, 0, 0, 0.55);
+          }
+
+          /* Fixed bottom action bar */
+          .rp-mobile-actions {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 70;
+            background: #181818;
+            border-top: 1px solid #252525;
+            padding: 10px 12px;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
+            gap: 8px;
+            box-sizing: border-box;
+          }
+          .rp-action-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border-radius: 8px;
+            padding: 11px 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            border: none;
+          }
+          .rp-action-btn--secondary {
+            background: #252525;
+            color: #ccc;
+            border: 1px solid #333 !important;
+          }
+          .rp-action-btn--primary {
+            background: #6ee7b7;
+            color: #111;
+          }
+        }
+
+        /* ── Animations ─────────────────────────────────────── */
         @keyframes printSlide {
           0%   { transform: translateY(-110%); opacity: 0; }
           20%  { opacity: 1; }

@@ -138,16 +138,16 @@ describe("Receipt page", () => {
     render(<ReceiptPage />);
     await waitFor(() => {
       expect(screen.getByText("Animate Print")).toBeInTheDocument();
-      expect(screen.getByText("Export PNG")).toBeInTheDocument();
-      expect(screen.getByText("Share")).toBeInTheDocument();
+      expect(screen.getAllByText("Export PNG").length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByText("Share").length).toBeGreaterThanOrEqual(1);
     });
   });
 
   it("navigates back to dashboard via back button", async () => {
     setupFetch(meResponse, mockActivity);
     render(<ReceiptPage />);
-    await waitFor(() => screen.getByText("All runs"));
-    fireEvent.click(screen.getByText("All runs"));
+    await waitFor(() => screen.getAllByText("All runs"));
+    fireEvent.click(screen.getAllByText("All runs")[0]);
     expect(mockPush).toHaveBeenCalledWith("/dashboard");
   });
 
