@@ -8,7 +8,7 @@ test.describe("Home page", () => {
     );
 
     await page.goto("/");
-    await expect(page.getByText("Runceipt")).toBeVisible();
+    await expect(page.getByText("Runceipt.", { exact: true })).toBeVisible();
     await expect(page.getByText("CONNECT YOUR RUNS")).toBeVisible();
     await expect(page.getByText("5.20 km").first()).toBeVisible();
   });
