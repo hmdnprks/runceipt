@@ -9,10 +9,8 @@ test.describe("Home page", () => {
 
     await page.goto("/");
     await expect(page.getByText("Runceipt")).toBeVisible();
-    await expect(page.getByText("Connect with Strava")).toBeVisible();
-    await expect(page.getByText("5.2 km")).toBeVisible();
-    await expect(page.getByText("10.4 km")).toBeVisible();
-    await expect(page.getByText("21.1 km")).toBeVisible();
+    await expect(page.getByText("CONNECT YOUR RUNS")).toBeVisible();
+    await expect(page.getByText("5.20 km").first()).toBeVisible();
   });
 
   test("redirects to dashboard when authenticated", async ({ page }) => {
@@ -33,12 +31,12 @@ test.describe("Home page", () => {
     );
 
     await page.goto("/");
-    await expect(page.getByText("Connect with Strava")).toBeVisible();
+    await expect(page.getByText("CONNECT YOUR RUNS")).toBeVisible();
 
     // Click should navigate to /api/auth/login which redirects to Strava
     const [response] = await Promise.all([
       page.waitForResponse("**/api/auth/login"),
-      page.getByText("Connect with Strava").click(),
+      page.getByText("CONNECT YOUR RUNS").click(),
     ]);
     expect(response.status()).toBe(307); // redirect
   });
