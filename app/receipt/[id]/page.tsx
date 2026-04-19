@@ -168,7 +168,7 @@ export default function ReceiptPage() {
               background: t.bg,
               color: t.text,
               border: themeId === t.id ? `2px solid ${t.accent}` : "2px solid transparent",
-              fontFamily: t.font === "serif" ? "Georgia, serif" : "'Courier New', monospace",
+              fontFamily: t.font === "serif" ? "Georgia, serif" : "'JetBrains Mono', monospace",
             }}
           >
             {t.label}
@@ -448,7 +448,7 @@ export default function ReceiptPage() {
             color: #ccc;
             border-radius: 6px;
             padding: 6px 12px;
-            font-family: 'Courier New', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             cursor: pointer;
             letter-spacing: 0.06em;
@@ -566,7 +566,7 @@ export default function ReceiptPage() {
             gap: 5px;
             border-radius: 8px;
             padding: 11px 8px;
-            font-family: 'Courier New', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.06em;
@@ -610,7 +610,13 @@ function LoadingScreen() {
         justifyContent: "center",
       }}
     >
-      <p style={{ color: "#888", fontFamily: "monospace", letterSpacing: "0.12em" }}>
+      <p
+        style={{
+          color: "#888",
+          fontFamily: "'JetBrains Mono', monospace",
+          letterSpacing: "0.12em",
+        }}
+      >
         Fetching run data...
       </p>
     </div>
@@ -627,7 +633,7 @@ function ErrorScreen({ error, onBack }: { error: string | null; onBack: () => vo
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        fontFamily: "monospace",
+        fontFamily: "'JetBrains Mono', monospace",
       }}
     >
       <p
@@ -654,7 +660,7 @@ function ErrorScreen({ error, onBack }: { error: string | null; onBack: () => vo
           padding: "8px 16px",
           borderRadius: "4px",
           cursor: "pointer",
-          fontFamily: "monospace",
+          fontFamily: "'JetBrains Mono', monospace",
         }}
       >
         <ArrowLeft size={11} strokeWidth={1.5} />
@@ -669,7 +675,7 @@ const s: Record<string, React.CSSProperties> = {
     minHeight: "100vh",
     background: "#111",
     display: "flex",
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "'JetBrains Mono', monospace",
   },
   sidebar: {
     width: "260px",
@@ -688,7 +694,7 @@ const s: Record<string, React.CSSProperties> = {
     color: "#555",
     fontSize: "11px",
     cursor: "pointer",
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "'JetBrains Mono', monospace",
     textAlign: "left",
     padding: "0",
     marginBottom: "20px",
@@ -729,7 +735,7 @@ const s: Record<string, React.CSSProperties> = {
     borderRadius: "4px",
     padding: "8px 10px",
     fontSize: "11px",
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "'JetBrains Mono', monospace",
     outline: "none",
     boxSizing: "border-box",
   },
@@ -743,7 +749,7 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: "10px",
     cursor: "pointer",
     marginBottom: "5px",
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "'JetBrains Mono', monospace",
     transition: "all 0.12s",
   },
   actions: {
@@ -760,7 +766,7 @@ const s: Record<string, React.CSSProperties> = {
     borderRadius: "4px",
     padding: "11px",
     fontSize: "11px",
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "'JetBrains Mono', monospace",
     fontWeight: "700",
     cursor: "pointer",
     letterSpacing: "0.1em",
@@ -772,7 +778,7 @@ const s: Record<string, React.CSSProperties> = {
     borderRadius: "4px",
     padding: "11px",
     fontSize: "11px",
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "'JetBrains Mono', monospace",
     fontWeight: "700",
     cursor: "pointer",
     letterSpacing: "0.1em",
