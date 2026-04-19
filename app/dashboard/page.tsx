@@ -197,7 +197,7 @@ function SkeletonCard() {
 }
 
 const s: Record<string, React.CSSProperties> = {
-  root: { minHeight: "100vh", background: "#111", fontFamily: "'Courier New', monospace" },
+  root: { minHeight: "100vh", background: "#111", fontFamily: "'JetBrains Mono', monospace" },
   header: {
     borderBottom: "1px solid #1e1e1e",
     padding: "16px 32px",
@@ -216,7 +216,7 @@ const s: Record<string, React.CSSProperties> = {
     padding: "5px 10px",
     fontSize: "10px",
     cursor: "pointer",
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "'JetBrains Mono', monospace",
   },
   main: { maxWidth: "960px", margin: "0 auto", padding: "48px 32px" },
   h1: { color: "#fff", fontSize: "22px", fontWeight: "700", marginBottom: "6px" },
@@ -247,7 +247,7 @@ const s: Record<string, React.CSSProperties> = {
     cursor: "pointer",
     transition: "border-color 0.15s, transform 0.1s",
     width: "100%",
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "'JetBrains Mono', monospace",
   },
   cardTitle: {
     color: "#fff",
@@ -278,7 +278,7 @@ const s: Record<string, React.CSSProperties> = {
     padding: "10px 24px",
     fontSize: "11px",
     cursor: "pointer",
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "'JetBrains Mono', monospace",
   },
   emptyState: {
     textAlign: "center",

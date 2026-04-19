@@ -104,7 +104,7 @@ test.describe("Visual: Full pages", () => {
       route.fulfill({ status: 401, json: { error: "Unauthorized" } })
     );
     await page.goto("/");
-    await page.getByText("Connect with Strava").waitFor({ state: "visible" });
+    await page.getByText("CONNECT YOUR RUNS").waitFor({ state: "visible" });
     await page.waitForTimeout(500);
 
     await expect(page).toHaveScreenshot("landing-page.png", {
